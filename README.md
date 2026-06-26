@@ -1,3 +1,54 @@
+# Flutter Shop App
+
+[![Flutter](https://img.shields.io/badge/Flutter-3.2+-02569B?logo=flutter&logoColor=white)](https://flutter.dev)
+[![Dart](https://img.shields.io/badge/Dart-3.2+-0175C2?logo=dart&logoColor=white)](https://dart.dev)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20iOS%20%7C%20Web%20%7C%20Linux-lightgrey)](https://flutter.dev)
+
+> **اپلیکیشن فروشگاهی تجاری** — ساخته‌شده با Flutter، Clean Architecture، Firebase و Riverpod
+
+یک اپلیکیشن e-commerce کامل و production-ready برای Android، iOS، Web و Linux با پنل مدیریت، احراز هویت، جستجو و فیلتر پیشرفته، و پشتیبانی RTL.
+
+## نگاه سریع
+
+| موضوع | جزئیات |
+|--------|--------|
+| **معماری** | Clean Architecture + Feature-First |
+| **State** | Riverpod 2.5+ |
+| **Backend** | Firebase (Auth, Firestore, Storage) |
+| **نسخه** | 1.0.0 |
+
+## شروع سریع
+
+```bash
+git clone https://github.com/saeedshamc/flutter-shop.git
+cd flutter-shop
+flutter pub get
+flutter pub run build_runner build --delete-conflicting-outputs
+flutter run
+```
+
+برای راه‌اندازی Firebase و جزئیات بیشتر، بخش **نصب و راه‌اندازی** در ادامه همین فایل را ببینید.
+
+## مستندات
+
+| فایل | توضیح |
+|------|--------|
+| [QUICK_START.md](QUICK_START.md) | شروع سریع |
+| [SETUP_GUIDE.md](SETUP_GUIDE.md) | راهنمای نصب |
+| [ARCHITECTURE.md](ARCHITECTURE.md) | معماری پروژه |
+| [API_DOCUMENTATION.md](API_DOCUMENTATION.md) | مستندات API |
+| [DEPLOYMENT.md](DEPLOYMENT.md) | انتشار و Deploy |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | مشارکت |
+| [CHANGELOG.md](CHANGELOG.md) | تاریخچه تغییرات |
+
+## ارتباط
+
+- **Email:** saeedshams2024@gmail.com
+- **Website:** https://www.saeedshamsi.ir
+
+---
+
 # 🛍️ Flutter Shop App - Commercial E-Commerce Application
 
 یک اپلیکیشن فروشگاهی کاملاً تجاری، مقیاس‌پذیر و قابل انتشار برای Android و iOS
@@ -374,4 +425,3 @@ service cloud.firestore {
 ---
 
 **ساخته شده با ❤️ و Flutter**
-
