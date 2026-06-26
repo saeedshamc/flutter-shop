@@ -368,8 +368,8 @@ service cloud.firestore {
 ## 📞 پشتیبانی
 
 برای سوالات و پشتیبانی:
-- Email: support@yourapp.com
-- Website: https://yourapp.com
+- Email: saeedshams2024@gmail.com
+- Website: https://www.saeedshamsi.ir
 
 ---
 
