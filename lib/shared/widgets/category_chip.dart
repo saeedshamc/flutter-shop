@@ -32,6 +32,15 @@ class CategoryChip extends StatelessWidget {
                 ? theme.colorScheme.primary
                 : theme.dividerColor,
           ),
+          boxShadow: isSelected
+              ? [
+                  BoxShadow(
+                    color: theme.colorScheme.primary.withOpacity(0.35),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
+                ]
+              : null,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,

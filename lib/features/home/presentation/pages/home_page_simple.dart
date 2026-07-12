@@ -24,7 +24,7 @@ class HomePageSimple extends ConsumerStatefulWidget {
 
 class _HomePageSimpleState extends ConsumerState<HomePageSimple> {
   late List<ProductModel> _featuredProducts;
-  
+
   @override
   void initState() {
     super.initState();
@@ -143,6 +143,17 @@ class _HomePageSimpleState extends ConsumerState<HomePageSimple> {
                       theme.colorScheme.secondary,
                     ],
                   ),
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(28),
+                    bottomRight: Radius.circular(28),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: theme.colorScheme.primary.withOpacity(0.35),
+                      blurRadius: 20,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -212,7 +223,12 @@ class _HomePageSimpleState extends ConsumerState<HomePageSimple> {
                     ),
                     TextButton(
                       onPressed: () {
-                        // TODO: Navigate to categories page
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ProductListPageSimple(),
+                          ),
+                        );
                       },
                       child: const Text(AppStrings.seeAll),
                     ),
@@ -287,41 +303,34 @@ class _HomePageSimpleState extends ConsumerState<HomePageSimple> {
               
               SizedBox(
                 height: isSmall ? 260 : 300,
-                child: ReorderableListView.builder(
+                // Fix: this used to be a ReorderableListView, which lets the
+                // user drag-and-drop featured products to reorder them.
+                // That's a to-do-list interaction, not something a product
+                // carousel should do — it made simple horizontal swipes feel
+                // sticky/glitchy since Flutter had to disambiguate a scroll
+                // gesture from a drag-to-reorder gesture on every card.
+                // A plain horizontal ListView is the correct widget here.
+                child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   padding: EdgeInsets.symmetric(horizontal: isSmall ? 12 : 16),
                   itemCount: _featuredProducts.length,
-                  proxyDecorator: (child, index, animation) => child,
-                  onReorder: (oldIndex, newIndex) {
-                    setState(() {
-                      if (newIndex > oldIndex) newIndex -= 1;
-                      final item = _featuredProducts.removeAt(oldIndex);
-                      _featuredProducts.insert(newIndex, item);
-                    });
-                  },
+                  separatorBuilder: (context, index) => SizedBox(width: isSmall ? 12 : 16),
                   itemBuilder: (context, index) {
                     final product = _featuredProducts[index];
-                    return Padding(
-                      key: ValueKey(product.id),
-                      padding: EdgeInsets.only(right: index == _featuredProducts.length - 1 ? 0 : (isSmall ? 12 : 16)),
-                      child: ReorderableDragStartListener(
-                        index: index,
-                        child: SizedBox(
-                          width: isSmall ? 170 : 200,
-                          child: ProductCard(
-                            product: product,
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ProductDetailPageSimple(
-                                    product: product,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
+                    return SizedBox(
+                      width: isSmall ? 170 : 200,
+                      child: ProductCard(
+                        product: product,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProductDetailPageSimple(
+                                product: product,
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     );
                   },

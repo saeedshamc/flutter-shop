@@ -8,6 +8,7 @@ import '../../../../shared/models/product_model.dart';
 import '../../../../shared/data/mock_data.dart';
 import '../../../../shared/widgets/loading_indicator.dart';
 import '../../../cart/presentation/providers/cart_provider.dart';
+import '../../../cart/presentation/pages/cart_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ProductDetailPageSimple extends ConsumerStatefulWidget {
@@ -60,8 +61,10 @@ class _ProductDetailPageSimpleState extends ConsumerState<ProductDetailPageSimpl
           label: 'مشاهده سبد',
           textColor: Colors.white,
           onPressed: () {
-            Navigator.pop(context);
-            // TODO: Navigate to cart
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const CartPage()),
+            );
           },
         ),
       ),
@@ -76,7 +79,7 @@ class _ProductDetailPageSimpleState extends ConsumerState<ProductDetailPageSimpl
     final product = _product;
     final images = product.images.isNotEmpty 
         ? product.images 
-        : ['https://via.placeholder.com/400'];
+        : ['https://placehold.co/400x400/EEF2FF/6366F1'];
     
     return Scaffold(
       body: SafeArea(
@@ -96,7 +99,7 @@ class _ProductDetailPageSimpleState extends ConsumerState<ProductDetailPageSimpl
                         setState(() => _currentImageIndex = index);
                       },
                       itemBuilder: (context, index) {
-                        return CachedNetworkImage(
+                        final image = CachedNetworkImage(
                           imageUrl: images[index],
                           fit: BoxFit.cover,
                           placeholder: (context, url) => Container(
@@ -111,6 +114,12 @@ class _ProductDetailPageSimpleState extends ConsumerState<ProductDetailPageSimpl
                             ),
                           ),
                         );
+                        // Only the first image shares the Hero tag used by
+                        // ProductCard so the tap transition animates smoothly
+                        // without triggering duplicate-tag Hero errors.
+                        return index == 0
+                            ? Hero(tag: 'product-image-${product.id}', child: image)
+                            : image;
                       },
                     ),
                     

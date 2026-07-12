@@ -130,12 +130,46 @@ class CartPage extends ConsumerWidget {
                               Column(
                                 children: [
                                   IconButton(
-                                    icon: const Icon(Icons.remove_circle_outline),
+                                    // Fix: decrementing from quantity 1 used to
+                                    // silently delete the item from the cart
+                                    // with no warning. Now it asks first.
+                                    icon: Icon(
+                                      item.quantity == 1
+                                          ? Icons.delete_outline
+                                          : Icons.remove_circle_outline,
+                                      color: item.quantity == 1 ? AppColors.error : null,
+                                    ),
                                     onPressed: () {
-                                      ref.read(cartProvider.notifier).updateQuantity(
-                                        item.product.id,
-                                        item.quantity - 1,
-                                      );
+                                      if (item.quantity == 1) {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                            title: const Text('حذف محصول'),
+                                            content: Text('«${item.product.name}» از سبد خرید حذف شود؟'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(context),
+                                                child: const Text(AppStrings.cancel),
+                                              ),
+                                              ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor: AppColors.error,
+                                                ),
+                                                onPressed: () {
+                                                  ref.read(cartProvider.notifier).removeItem(item.product.id);
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Text(AppStrings.delete),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      } else {
+                                        ref.read(cartProvider.notifier).updateQuantity(
+                                          item.product.id,
+                                          item.quantity - 1,
+                                        );
+                                      }
                                     },
                                   ),
                                   Text(
